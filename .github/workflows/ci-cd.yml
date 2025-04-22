@@ -1,0 +1,45 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Run tests
+      run: npm test
+      
+    - name: Build
+      run: |
+        mkdir -p public
+        echo "<!DOCTYPE html>
+        <html>
+        <head>
+          <title>My Web App</title>
+        </head>
+        <body>
+          <h1>Welcome to My Web App</h1>
+          <p>CI/CD Pipeline working!</p>
+        </body>
+        </html>" > public/index.html
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
