@@ -11,6 +11,7 @@ Aplicación web de ejemplo con un pipeline CI/CD automatizado usando GitHub Acti
 
 ## Estructura del Proyecto
 .
+
 ├── .github/workflows
 
 │ └── ci-cd.yml # Configuración del pipeline
